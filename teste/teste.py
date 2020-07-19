@@ -10,4 +10,5 @@ sf = gpd.read_file(sf_path, encoding='utf-8')
 sf_pgua = sf[sf.NM_MUNICIP == 'PARANAGUÁ']
 #shape_pgua = sf_pgua.to_crs({'init': 'epsg:4326'})
 #shape_pgua.plot()
-sf_pgua.plot()
+fig = sf_pgua.plot().figure
+fig.savefig('mapa_paranagua.png')
