@@ -13,6 +13,7 @@ Data sources:
  * http://www.paranagua.pr.gov.br/boletim-epidemiologico.php
  * https://www.curitiba.pr.gov.br/dadosabertos/busca/?grupo=16
  * ftp://geoftp.ibge.gov.br/organizacao_do_territorio/malhas_territoriais/malhas_municipais/municipio_2015/UFs/PR/
+ * http://download.geofabrik.de/south-america/brazil/sul-latest-free.shp.zip
 
 ## Scripts
 You need to make *Setup* just one time. Then, activate the virtual enviroment with:
