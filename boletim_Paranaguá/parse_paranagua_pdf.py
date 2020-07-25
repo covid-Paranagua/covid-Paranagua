@@ -15,13 +15,18 @@ def download_missing_pdf():
     import re
     page = request.urlopen("http://www.paranagua.pr.gov.br/boletim-epidemiologico.php")
     html = page.read().decode('utf8')
-#    pattern = re.compile('\"[^\"]pdf\"')
+    # pattern = re.compile('\"[^\"]pdf\"')
     pattern = re.compile('href=[\'"]?downloads/boletins/([^\'">]+)')
     links = pattern.findall(html)
     #'downloads/boletins/Boletim Epidemiológico 06-04-2020.pdf'
     for l in links:
         if not Path(l).is_file():
             request.urlretrieve ("http://www.paranagua.pr.gov.br/downloads/boletins/" + urllib.request.pathname2url(l), filename=l)
+    # write a file with pdf order
+    f = open('ordem.txt', 'w')
+    for l in links:
+        f.write(l + '\n')
+    f.close()
 
 def read_pdf():
     from PyPDF4 import PdfFileReader
@@ -47,3 +52,19 @@ def read_pdf():
     document.pages[3].extractText()
     document.pages[4].extractText()
     document.pages[5].extractText()
+
+def read_tabula(pdf_name):
+    import tabula
+    output = pdf_name[0:(len(pdf_name)-4)]
+    tabula.convert_into(pdf_name, output, output_format="csv", pages="all")
+
+def read_camelot(pdf_name):
+    import camelot
+    output = pdf_name[0:(len(pdf_name)-4)]
+    tables =  camelot.read_pdf(pdf_name, pages='1-end')
+
+    # for t in tables:
+    #   t.df
+
+    tables.export(output, f='csv', compress=True)
+    #tables[0].to_csv(output)
