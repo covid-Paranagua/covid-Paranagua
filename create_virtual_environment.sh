@@ -1,6 +1,8 @@
 #!/bin/bash
-virtualenv -p python3 environment
-chmod +x ./environment/bin/activate ./environment/bin/activate_this.py
+if [[ ! -d "environment" ]]
+then
+    virtualenv -p python3 environment
+    chmod +x ./environment/bin/activate ./environment/bin/activate_this.py
+fi
 source environment/bin/activate
-source environment/bin/activate_this.py
-pip3 install pandas
+pip3 install pandas ipython camelot-py geopandas opencv-python

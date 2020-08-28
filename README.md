@@ -18,7 +18,7 @@ Data sources:
 ## Scripts
 You need to make *Setup* just one time. Then, activate the virtual enviroment with:
 
-    source enviroment/bin/activate
+    source environment/bin/activate
 
 With the libraries available use these scripts:
 
