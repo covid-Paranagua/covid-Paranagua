@@ -11,7 +11,9 @@ From 02-06-2020 until 19-07-2020 the PDFs have four groups of page displaying ta
 ### T1
 Show number of confirmed cases by neighbourhood. It is identified by a string ending with "CASOS CONFIRMADOS POR BAIRRO".
 
-|Bairro|Feminino|Masculino|Total|
+| Bairro | Feminino | Masculino | Total |
+| ------ | -------- | --------- | ----- |
+|'string'| 'Int64'  | 'Int64'   |'Int64'|
 
 ### T2
 Show tests results. Inform how many are waiting results, how many were tested negative for COVID-19 and how many have healed.
@@ -29,12 +31,16 @@ Show tests results. Inform how many are waiting results, how many were tested ne
 ### T3
 Number of deaths. It is identifyied by a string ending with "ÓBITOS".
 
-|Bairro|Idade|Sexo|
+| Bairro | Idade | Sexo   |
+| ------ | ----- | ----   |
+|'string'|'Int64'|'string'|
 
 ### T4
 Number of confirmed tests for each neighbourhood. It is identifyied by a string ending with "CASOS CONFIRMADOS POR BAIRRO E IDADE". This table is not available anymore in 20-07-2020 onward.
 
-|Confirmados|Bairro|Idade|Sexo|
+| Confirmados | Bairro | Idade | Sexo   |
+| ----------- | ------ | ----- | ----   |
+| 'Int64'     |'string'|'Int64'|'string'|
 
 ## Output
 Each PDF file have four csv files. The ".pdf" ending is removed and a tN.csv is added, where N can be 1, 2, 3 or 4, one file for each table kind.
