@@ -3,8 +3,8 @@
 
 # open CSVs files generated in /boletim-Paranaguá as pandas.DataFrame
 # names in boletim-Paranaguá/order.txt
-# october names "Boletim CORONAVÍRUS DD-MM -2020.pdf"
-# june, july names "Boletim CORONAVÍRUS DD-MM-2020.pdf"
+# august names "Boletim CORONAVÍRUS DD-MM -2020.pdf"
+# june, july, september names "Boletim CORONAVÍRUS DD-MM-2020.pdf"
 
 from pathlib import Path
 import pandas
@@ -13,7 +13,7 @@ import pandas
 def get_pdf_name(day:int, month:int):
     name_pattern = "../boletim_Paranaguá/Boletim CORONAVÍRUS {:02d}-{:02d}{}-2020.pdf"
     name = ''
-    if month in (6, 7):
+    if month in (6, 7, 9):
         space = ''
         name = name_pattern.format(day, month, space)
     elif month == 8:

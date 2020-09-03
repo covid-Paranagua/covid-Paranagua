@@ -22,7 +22,10 @@ You need to make *Setup* just one time. Then, activate the virtual enviroment wi
 
 With the libraries available use these scripts:
 
- * None available at the moment.
+ * boletim_Paranaguá/parse_paranagua_pdf.py download new PDFs from Paranaguá's website, convert they to CSV and warn if something went wrong.
+ * teste/teste.py plot Paranaguá city contour through a shape (shp) file.
+ * teste/mapa_confirmados.py draw a map with Paranguá's neighborhoods with colors representing the confirmed cases.
+ * teste/open_csv.py some functions to get file names and open the files. It has some functions with the same funcionality of parse_paranagua_pdf.py.
 
 ## Setup
 Install virtual env:

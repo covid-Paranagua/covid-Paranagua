@@ -98,6 +98,7 @@ def read_pdf(pdf_name):
         else: #table_number == 4:
             if not text.endswith('CASOS CONFIRMADOS POR BAIRRO E IDADE'):
                 print('Error: expected table 4, but other pattern found.')
+                print('Page title: ' + text)
 
         if table_number in (1, 4):
             td = [] # table data, html inspired name
