@@ -36,7 +36,11 @@ bairro_contorno = {}
 with fiona.open('data/neighborhood.geojson') as fd:
     for neighborhood in fd:
         bairro_contorno[neighborhood['properties']['addr:place']] = neighborhood['geometry']
-bairro_contorno['Vila Ruth'] = bairro_contorno['Vila Rute'] # different name
+bairro_contorno['Vila Alboit'] = bairro_contorno['Alboit'] # different name
+bairro_contorno['Jardim Itiberê'] = bairro_contorno['Itiberê']
+bairro_contorno['Jardim Eldorado'] = bairro_contorno['Eldorado']
+bairro_contorno['Vila Ruth'] = bairro_contorno['Vila Rute']
+
 # remove unknown
 
 # remove unknown on the fly
