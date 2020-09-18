@@ -1,0 +1,84 @@
+<html>
+<head>
+<title>Covid Watch Paranaguá</title>
+<script language="javascript">
+	var day = 0, month = 0;
+	function changeImage(){
+		selDia = document.getElementById("dia");
+		dia = selDia.selectedIndex;
+		strDia = selDia.options[dia].value;
+		selMes = document.getElementById("mes");
+		mes = selMes.selectedIndex;
+		strMes = selMes.options[mes].value;
+		selDados = document.getElementById("dados");
+		dados = selDados.selectedIndex;
+		strDados = selDados.options[dados].value;
+		strFinal = strDados + strDia + "-" + strMes + ".png";
+		imgLocation = document.getElementById("mapa");
+		imgLocation.innerHTML = "<img src=\"" + strFinal + "\">";
+	}
+	function today(){
+		sel = document.getElementById("dia");
+		sel.selectedIndex;
+	}
+</script>
+</head>
+<body>
+<h1>Coronavírus em Paranaguá</h1>
+<p>Esta página mostra os casos confirmados e as mortes de coronavírus em Paranaguá em cada bairro. Os dados são obitidos da <a href="http://www.paranagua.pr.gov.br/boletim-epidemiologico.php">prefeitura de Paranguá</a>. O processo de obter os dados, tratá-los e plotá-los é automático e é um <a href="https://github.com/ltakiguchi/covid-watch">software livre</a>.</p>
+<p>AQUI PODERIA SER COLOCADO UM PAINEL COM O NÚMERO DE CASOS TOTAL + ÓBITOS + CASOS ATIVOS NAQUELE DIA.</p>
+<h2>Dados por Bairro</h2>
+<div id="mapa"><img src="confirmados14-09.png" /></div>
+<form id="dropdowns">
+<label for="dia">Dia:</label>
+<select id="dia" onchange="changeImage()">
+	<option value="01">01</option>
+	<option value="02">02</option>
+	<option value="03">03</option>
+	<option value="04">04</option>
+	<option value="05">05</option>
+	<option value="06">06</option>
+	<option value="07">07</option>
+	<option value="08">08</option>
+	<option value="09">09</option>
+	<option value="10">10</option>
+	<option value="11">11</option>
+	<option value="12">12</option>
+	<option value="13">13</option>
+	<option value="14">14</option>
+	<option value="15">15</option>
+	<option value="16">16</option>
+	<option value="17" selected="selected">17</option>
+	<option value="18">18</option>
+	<option value="19">19</option>
+	<option value="20">20</option>
+	<option value="21">21</option>
+	<option value="22">22</option>
+	<option value="23">23</option>
+	<option value="24">24</option>
+	<option value="25">25</option>
+	<option value="26">26</option>
+	<option value="27">27</option>
+	<option value="28">28</option>
+	<option value="29">29</option>
+	<option value="30">30</option>
+	<option value="31">31</option>
+</select>
+<label for="mes" onchange="changeImage()">Mês:</label>
+<select id="mes">
+	<option value="07">Julho</option>
+	<option value="08">Agosto</option>
+	<option value="09" selected="selected">Setembro</option>
+</select>
+<br />
+<label for="dados" onchange="changeImage()">Dado para plotar:</label>
+<select id="dados">
+	<option value="confirmados">Testes Positivos</option>
+	<option value="mortes">Mortes</option>
+</select>
+<h2>Evolução Epidêmica</h2>
+<p>AQUI VAI O PLOT DE NOVOS CASOS CONFIRMADOS/ÓBITOS VS. TEMPO. SERÁ QUE FAZEMOS O GRÁFICO MUDAR TAMBÉM, DE ACORDO COM O MAPA?</p>
+<p>AQUI VAI O PLOT DE CASOS ACUMULADOS/ÓBITOS ACUMULADOS VS. TEMPO.</p>
+</form>
+</body>
+</html>
