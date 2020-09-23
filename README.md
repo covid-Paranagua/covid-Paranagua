@@ -26,6 +26,8 @@ With the libraries available use these scripts:
  * teste/teste.py plot Paranaguá city contour through a shape (shp) file.
  * teste/mapa_confirmados.py draw a map with Paranguá's neighborhoods with colors representing the confirmed cases.
  * teste/open_csv.py some functions to get file names and open the files. It has some functions with the same funcionality of parse_paranagua_pdf.py.
+ * teste/geojson_converter.py transform a geojson file with a LineString to a Poolygon
+ * teste/plot_maps.py open all CSV files and draw colored maps informing number of confirmed cases and deaths in each neighboorhood.
 
 ## Setup
 Install virtual env:

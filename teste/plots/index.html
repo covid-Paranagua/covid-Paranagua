@@ -1,3 +1,4 @@
+<!doctype html>
 <html>
 <head>
 <title>Covid Watch Paranaguá</title>
@@ -15,7 +16,7 @@
 		strDados = selDados.options[dados].value;
 		strFinal = strDados + strDia + "-" + strMes + ".png";
 		imgLocation = document.getElementById("mapa");
-		imgLocation.innerHTML = "<img src=\"" + strFinal + "\">";
+		imgLocation.innerHTML = "<img width=\"640\" height=\"480\" src=\"" + strFinal + "\">";
 	}
 	function today(){
 		sel = document.getElementById("dia");
@@ -25,10 +26,10 @@
 </head>
 <body>
 <h1>Coronavírus em Paranaguá</h1>
-<p>Esta página mostra os casos confirmados e as mortes de coronavírus em Paranaguá em cada bairro. Os dados são obitidos da <a href="http://www.paranagua.pr.gov.br/boletim-epidemiologico.php">prefeitura de Paranguá</a>. O processo de obter os dados, tratá-los e plotá-los é automático e é um <a href="https://github.com/ltakiguchi/covid-watch">software livre</a>.</p>
+<p>Esta página mostra os casos confirmados e as mortes de coronavírus em Paranaguá em cada bairro. Os dados são obitidos da <a href="http://www.paranagua.pr.gov.br/boletim-epidemiologico.php">prefeitura de Paranaguá</a>. O processo de obter os dados, tratá-los e plotá-los é automáticamente feito por um <a href="https://github.com/ltakiguchi/covid-watch">software livre</a>.</p>
 <p>AQUI PODERIA SER COLOCADO UM PAINEL COM O NÚMERO DE CASOS TOTAL + ÓBITOS + CASOS ATIVOS NAQUELE DIA.</p>
 <h2>Dados por Bairro</h2>
-<div id="mapa"><img src="confirmados14-09.png" /></div>
+<div id="mapa"><img width="640" height="480" src="confirmados14-09.png" /></div>
 <form id="dropdowns">
 <label for="dia">Dia:</label>
 <select id="dia" onchange="changeImage()">
@@ -64,21 +65,23 @@
 	<option value="30">30</option>
 	<option value="31">31</option>
 </select>
-<label for="mes" onchange="changeImage()">Mês:</label>
-<select id="mes">
+<label for="mes">Mês:</label>
+<select id="mes" onchange="changeImage()">
 	<option value="07">Julho</option>
 	<option value="08">Agosto</option>
 	<option value="09" selected="selected">Setembro</option>
 </select>
 <br />
-<label for="dados" onchange="changeImage()">Dado para plotar:</label>
-<select id="dados">
+<label for="dados">Dado para plotar:</label>
+<select id="dados" onchange="changeImage()">
 	<option value="confirmados">Testes Positivos</option>
 	<option value="mortes">Mortes</option>
 </select>
 <h2>Evolução Epidêmica</h2>
 <p>AQUI VAI O PLOT DE NOVOS CASOS CONFIRMADOS/ÓBITOS VS. TEMPO. SERÁ QUE FAZEMOS O GRÁFICO MUDAR TAMBÉM, DE ACORDO COM O MAPA?</p>
+<img width="640" height="480" src="casos_confirmados.png" alt="Evolução dos Casos Confirmados" />
 <p>AQUI VAI O PLOT DE CASOS ACUMULADOS/ÓBITOS ACUMULADOS VS. TEMPO.</p>
+<img width="640" height="480" src="obitos.png" alt="Evolução dos Óbitos" />
 </form>
 </body>
 </html>

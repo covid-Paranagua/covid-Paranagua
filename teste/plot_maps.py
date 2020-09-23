@@ -8,12 +8,47 @@ import pandas as pd
 import geopandas
 from itertools import product
 from open_csv import get_DataFrames, get_pdf_name
+from matplotlib.dates import datestr2num
+
+def sum_row(serie):
+    try:
+        separator = ' - '
+        if serie[0].find('–') != -1:
+            separator = ' – '
+        first = serie[0].split(separator)[1]
+        second = serie[1].split(separator)[1]
+        s1 = first.split('.')
+        n1 = int(''.join(s1))
+        s2 = second.split('.')
+        n2 = int(''.join(s2))
+        return n1 + n2
+    except:
+        return -1
+
+all_days = []
 
 # open data files
 mapa_DataFrame = geopandas.read_file('data/neighborhood3.geojson')
-#day=25
-#month=7
-for day, month in product(range(1, 32), range(7, 10)):
+# correct names in map
+neighborhood = mapa_DataFrame['addr:place']
+neighborhood = neighborhood.str.replace('Alboit', 'Vila Alboit')
+neighborhood = neighborhood.str.replace('Alvorada', 'Jardim Alvorada')
+neighborhood = neighborhood.str.replace('Centro Histórico', 'Centro')
+neighborhood = neighborhood.str.replace('Eldorado', 'Jardim Eldorado')
+neighborhood = neighborhood.str.replace('Itiberê', 'Jardim Itiberê')#?
+neighborhood = neighborhood.str.replace('Ouro Fino', 'Jardim Ouro Fino')
+neighborhood = neighborhood.str.replace('Santa Helena', 'Vila Santa Helena')
+neighborhood = neighborhood.str.replace('Vila Rute', 'Vila Ruth')
+neighborhood = neighborhood.str.replace('Vila dos Comerciários', 'Comerciários')
+mapa_DataFrame['addr:place'] = neighborhood
+# Industrial
+# None
+# Oceania
+# Dom Pedro II
+# Divinéia
+# Correia Velho
+
+for day, month in product(range(7, 10), range(1, 32)):
     pdf_name = get_pdf_name(day, month)
     if pdf_name is None:
         print('Not doing {:02d}/{:02d}.'.format(day, month))
@@ -25,13 +60,6 @@ for day, month in product(range(1, 32), range(7, 10)):
     t1 = csv_DataFrames[0]
     t2 = csv_DataFrames[1]
     t3 = csv_DataFrames[2]
-    # correct names in map
-    neighborhood = mapa_DataFrame['addr:place']
-    neighborhood = neighborhood.str.replace('Vila Rute', 'Vila Ruth')
-    neighborhood = neighborhood.str.replace('Eldorado', 'Jardim Eldorado')
-    neighborhood = neighborhood.str.replace('Itiberê', 'Jardim Itiberê')
-    neighborhood = neighborhood.str.replace('Alboit', 'Vila Alboit')
-    mapa_DataFrame['addr:place'] = neighborhood
     # join tables
     confirmed = pd.DataFrame({'addr:place':t1['Bairro'], 'positive_tested':t1['Total']})
     mapa_DataFrame = mapa_DataFrame.merge(confirmed, on='addr:place', how='left')
@@ -59,8 +87,60 @@ for day, month in product(range(1, 32), range(7, 10)):
     plt.savefig('plots/mortes{:02d}-{:02d}.png'.format(day, month))#, bbox_inches='tight', pad_inches=0)
     plt.close()
 
+    # [data casos_confirmados óbitos aguardando_result descartados recuperados] [casos_confirmados_acc óbitos_acc]
+    line = [0]*6
+    # date
+    data = "2020-{:02d}-{:02d}".format(month, day)
+    date = datestr2num(data)
+    line[0] = date
+    line[1] = t1['Total'].sum() # total casos confirmados
+    line[2] = t3.shape[0]       # total óbitos
+#    waiting = int(t2['Aguardando Resultados'][0].split(' - ')[1]) + int(t2['Aguardando Resultados'][1].split(' - ')[1])     # waiting exam result
+    line[3] = sum_row(t2['Aguardando Resultados'])
+    line[4] = sum_row(t2['Descartados'])
+    line[5] = sum_row(t2['Recuperados'])
+    if line.count(-1) == 0:
+        all_days.append(line)
+    else:
+        print('Not doing T2 in {:02d}/{:02d}.'.format(day, month))
+
     del mapa_DataFrame['positive_tested']
     del mapa_DataFrame['mortes']
+
+mapas_t2 = pd.DataFrame(all_days, columns=['Data', 'Casos Confirmados', 'Óbitos', 'Aguardando Resultado', 'Descartados', 'Recuperados'])
+
+# include not accumulate data
+cc = mapas_t2['Casos Confirmados'].to_numpy()
+cc[1:] -= cc[:-1]
+mapas_t2['Casos Confirmados n_acc'] = cc
+cc = mapas_t2['Óbitos'].to_numpy()
+cc[1:] -= cc[:-1]
+mapas_t2['Óbitos n_acc'] = cc
+cc = mapas_t2['Descartados'].to_numpy()
+cc[1:] -= cc[:-1]
+mapas_t2['Descartados n_acc'] = cc
+cc = mapas_t2['Recuperados'].to_numpy()
+cc[1:] -= cc[:-1]
+mapas_t2['Recuperados n_acc'] = cc
+
+
+# plot and save data
+# individual days data: Aguardando Resultado, Descartados, Recuperados, Casos Confirmados n_acc, Óbitos n_acc
+#plt.plot_date(mapas_t2['Data'], mapas_t2['Casos Confirmados'], xdate=True)
+plt.plot_date(mapas_t2['Data'], mapas_t2['Aguardando Resultado'], xdate=True)
+plt.plot_date(mapas_t2['Data'][1:], mapas_t2['Descartados n_acc'][1:], xdate=True)
+plt.plot_date(mapas_t2['Data'][1:], mapas_t2['Recuperados n_acc'][1:], xdate=True)
+plt.plot_date(mapas_t2['Data'][1:], mapas_t2['Casos Confirmados n_acc'][1:], xdate=True)
+plt.plot_date(mapas_t2['Data'][1:], mapas_t2['Óbitos n_acc'][1:], xdate=True)
+
+plt.savefig('plots/casos_confirmados.png')
+plt.close()
+
+# accumulate data
+plt.plot_date(mapas_t2['Data'], mapas_t2['Casos Confirmados'], xdate=True)
+plt.plot_date(mapas_t2['Data'], mapas_t2['Óbitos'], xdate=True)
+plt.savefig('plots/obitos.png')
+plt.close()
 
 # 40/55 15 faltantes
 # Eldorado = Jardim Eldorado
