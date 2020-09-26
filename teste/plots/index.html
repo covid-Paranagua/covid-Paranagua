@@ -26,8 +26,8 @@
 </head>
 <body>
 <h1>Coronavírus em Paranaguá</h1>
-<p>Esta página mostra os casos confirmados e as mortes de coronavírus em Paranaguá em cada bairro. Os dados são obitidos da <a href="http://www.paranagua.pr.gov.br/boletim-epidemiologico.php">prefeitura de Paranaguá</a>. O processo de obter os dados, tratá-los e plotá-los é automáticamente feito por um <a href="https://github.com/ltakiguchi/covid-watch">software livre</a>.</p>
-<p>AQUI PODERIA SER COLOCADO UM PAINEL COM O NÚMERO DE CASOS TOTAL + ÓBITOS + CASOS ATIVOS NAQUELE DIA.</p>
+<p>Esta página mostra os casos confirmados e as mortes de coronavírus em Paranaguá em cada bairro. Os dados são obitidos da <a href="http://www.paranagua.pr.gov.br/boletim-epidemiologico.php">prefeitura de Paranaguá</a>. O processo de obter os dados, tratá-los e plotá-los é automáticamente feito por um <a href="https://github.com/ltakiguchi/covid-watch">software livre</a>. Desenvolvido por Lia e Ricardo.</p>
+<p>Última atualização: <div id="ultimaAtualizacao"></div></p>
 <h2>Dados por Bairro</h2>
 <div id="mapa"><img width="640" height="480" src="confirmados14-09.png" /></div>
 <form id="dropdowns">
@@ -77,11 +77,11 @@
 	<option value="confirmados">Testes Positivos</option>
 	<option value="mortes">Mortes</option>
 </select>
-<h2>Evolução Epidêmica</h2>
-<p>AQUI VAI O PLOT DE NOVOS CASOS CONFIRMADOS/ÓBITOS VS. TEMPO. SERÁ QUE FAZEMOS O GRÁFICO MUDAR TAMBÉM, DE ACORDO COM O MAPA?</p>
-<img width="640" height="480" src="casos_confirmados.png" alt="Evolução dos Casos Confirmados" />
-<p>AQUI VAI O PLOT DE CASOS ACUMULADOS/ÓBITOS ACUMULADOS VS. TEMPO.</p>
-<img width="640" height="480" src="obitos.png" alt="Evolução dos Óbitos" />
 </form>
+<h2>Evolução Epidêmica</h2>
+<p>O gráfico com os dados novos diários. O número de óbitos é pequeno, os demais números são maiores e variam juntos.</p>
+<img width="640" height="480" src="casos_confirmados.png" alt="Evolução dos Casos Confirmados" />
+<p>O total de óbitos e casos confirmados a cada dia.</p>
+<img width="640" height="480" src="obitos.png" alt="Evolução dos Óbitos" />
 </body>
 </html>

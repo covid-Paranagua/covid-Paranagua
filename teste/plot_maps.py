@@ -34,8 +34,10 @@ neighborhood = mapa_DataFrame['addr:place']
 neighborhood = neighborhood.str.replace('Alboit', 'Vila Alboit')
 neighborhood = neighborhood.str.replace('Alvorada', 'Jardim Alvorada')
 neighborhood = neighborhood.str.replace('Centro Histórico', 'Centro')
+neighborhood = neighborhood.str.replace('Divinéia', 'Vila Divineia')
 neighborhood = neighborhood.str.replace('Eldorado', 'Jardim Eldorado')
 neighborhood = neighborhood.str.replace('Itiberê', 'Jardim Itiberê')#?
+neighborhood = neighborhood.str.replace('Jardim Yamaguchi', 'Loteamento Yamaguchi')
 neighborhood = neighborhood.str.replace('Ouro Fino', 'Jardim Ouro Fino')
 neighborhood = neighborhood.str.replace('Santa Helena', 'Vila Santa Helena')
 neighborhood = neighborhood.str.replace('Vila Rute', 'Vila Ruth')
@@ -48,7 +50,7 @@ mapa_DataFrame['addr:place'] = neighborhood
 # Divinéia
 # Correia Velho
 
-for day, month in product(range(7, 10), range(1, 32)):
+for month, day in product(range(7, 10), range(1, 32)):
     pdf_name = get_pdf_name(day, month)
     if pdf_name is None:
         print('Not doing {:02d}/{:02d}.'.format(day, month))
@@ -110,16 +112,16 @@ for day, month in product(range(7, 10), range(1, 32)):
 mapas_t2 = pd.DataFrame(all_days, columns=['Data', 'Casos Confirmados', 'Óbitos', 'Aguardando Resultado', 'Descartados', 'Recuperados'])
 
 # include not accumulate data
-cc = mapas_t2['Casos Confirmados'].to_numpy()
+cc = mapas_t2['Casos Confirmados'].to_numpy(copy=True)
 cc[1:] -= cc[:-1]
 mapas_t2['Casos Confirmados n_acc'] = cc
-cc = mapas_t2['Óbitos'].to_numpy()
+cc = mapas_t2['Óbitos'].to_numpy(copy=True)
 cc[1:] -= cc[:-1]
 mapas_t2['Óbitos n_acc'] = cc
-cc = mapas_t2['Descartados'].to_numpy()
+cc = mapas_t2['Descartados'].to_numpy(copy=True)
 cc[1:] -= cc[:-1]
 mapas_t2['Descartados n_acc'] = cc
-cc = mapas_t2['Recuperados'].to_numpy()
+cc = mapas_t2['Recuperados'].to_numpy(copy=True)
 cc[1:] -= cc[:-1]
 mapas_t2['Recuperados n_acc'] = cc
 
@@ -127,18 +129,25 @@ mapas_t2['Recuperados n_acc'] = cc
 # plot and save data
 # individual days data: Aguardando Resultado, Descartados, Recuperados, Casos Confirmados n_acc, Óbitos n_acc
 #plt.plot_date(mapas_t2['Data'], mapas_t2['Casos Confirmados'], xdate=True)
-plt.plot_date(mapas_t2['Data'], mapas_t2['Aguardando Resultado'], xdate=True)
-plt.plot_date(mapas_t2['Data'][1:], mapas_t2['Descartados n_acc'][1:], xdate=True)
-plt.plot_date(mapas_t2['Data'][1:], mapas_t2['Recuperados n_acc'][1:], xdate=True)
-plt.plot_date(mapas_t2['Data'][1:], mapas_t2['Casos Confirmados n_acc'][1:], xdate=True)
-plt.plot_date(mapas_t2['Data'][1:], mapas_t2['Óbitos n_acc'][1:], xdate=True)
-
+plt.plot_date(mapas_t2['Data'], mapas_t2['Aguardando Resultado'], xdate=True, label='Aguardando Resultado', linestyle='-', markersize=3)
+plt.plot_date(mapas_t2['Data'][1:], mapas_t2['Descartados n_acc'][1:], xdate=True, label='Teste negativo', linestyle='-', markersize=3)
+plt.plot_date(mapas_t2['Data'][1:], mapas_t2['Recuperados n_acc'][1:], xdate=True, label='Recuperados', linestyle='-', markersize=3)
+plt.plot_date(mapas_t2['Data'][1:], mapas_t2['Casos Confirmados n_acc'][1:], xdate=True, label='Casos Confirmados', linestyle='-', markersize=3)
+plt.plot_date(mapas_t2['Data'][1:], mapas_t2['Óbitos n_acc'][1:], xdate=True, label='Óbitos', linestyle='-', markersize=3)
+plt.xticks(rotation=15)
+plt.title('Dados diários')
+plt.legend()
 plt.savefig('plots/casos_confirmados.png')
 plt.close()
 
 # accumulate data
-plt.plot_date(mapas_t2['Data'], mapas_t2['Casos Confirmados'], xdate=True)
-plt.plot_date(mapas_t2['Data'], mapas_t2['Óbitos'], xdate=True)
+plt.plot_date(mapas_t2['Data'], mapas_t2['Casos Confirmados'], xdate=True, label='Casos Confirmados', linestyle='-', markersize=3)
+plt.plot_date(mapas_t2['Data'], mapas_t2['Óbitos'], xdate=True, label='Óbitos', linestyle='-', markersize=3)
+plt.xticks(rotation=15)
+plt.title('Dados Acumulados')
+plt.legend()
+#plt.show()
+
 plt.savefig('plots/obitos.png')
 plt.close()
 
