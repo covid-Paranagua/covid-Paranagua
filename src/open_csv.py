@@ -11,7 +11,7 @@ import pandas
 
 # get pdf's name by date and validates its existence
 def get_pdf_name(day:int, month:int):
-    name_pattern = "../boletim_Paranaguá/Boletim CORONAVÍRUS {:02d}-{:02d}{}-2020.pdf"
+    name_pattern = "../public/Boletim CORONAVÍRUS {:02d}-{:02d}{}-2020.pdf"
     name = ''
     if month in (6, 7, 9):
         space = ''

@@ -29,7 +29,7 @@ for i in range(56):# feature_collection:
 
 feature_collection_of_polygons = geojson.FeatureCollection(features)
 
-for i in range(57):
+for i in range(56):
     if not feature_collection_of_polygons[i].is_valid:
         print(i)
         print(feature_collection_of_polygons[i].errors())

@@ -22,7 +22,7 @@ dtypes= [{'Bairro': 'string', 'Feminino': 'Int64', 'Masculino': 'Int64', 'Total'
 def check_csv_healthy(pdf_file_name):
     checks = [False]*4
     length = len(pdf_file_name)
-    base_name = pdf_file_name[:length-4]
+    base_name = '../public/' + pdf_file_name[:length-4]
     csv_names = [base_name + 't{}.csv'.format(index) for index in range(1,5)]
     for i in range(4):
         csv = csv_names[i]
@@ -41,13 +41,13 @@ def download_missing_pdf():
     pattern = re.compile('href=[\'"]?downloads/boletins/([^\'">]+)')
     links = pattern.findall(html)
     for l in links:
-        if not Path(l).is_file():
+        if not Path('../public/' + l).is_file():
             try:
-                request.urlretrieve ("http://www.paranagua.pr.gov.br/downloads/boletins/" + urllib.request.pathname2url(l), filename=l)
+                request.urlretrieve ("http://www.paranagua.pr.gov.br/downloads/boletins/" + urllib.request.pathname2url(l), filename=('../public/' + l))
             except:
                 print("File not found: {0}.".format("http://www.paranagua.pr.gov.br/downloads/boletins/" + l))
     # write a file with all downloaded PDF file names order
-    f = open('order.txt', 'w')
+    f = open('../public/order.txt', 'w')
     for l in links:
         f.write(l + '\n')
     f.close()
@@ -55,10 +55,10 @@ def download_missing_pdf():
 # read order.txt and convert
 def convert_new_pdfs():
     print('converting\n')
-    with open('order.txt', 'r') as f:
+    with open('../public/order.txt', 'r') as f:
         for l in f.readlines():
-            l = l[:len(l)-1]
-            expected_csv_name = l[:len(l)-4] + 't1.csv'
+            l = '../public/' + l[:-1]
+            expected_csv_name = l[:-4] + 't1.csv'
             print('Read line: ' + l)
             if Path(l).is_file() and not Path(expected_csv_name).is_file():
                 print("Converting file" + l + '\n')

@@ -77,7 +77,7 @@ for month, day in product(range(7, 10), range(1, 32)):
     ax.set_axis_off()
     mapa_DataFrame.plot(column='positive_tested', ax=ax, legend=True, cax=cax, missing_kwds={'color':'lightgrey'})
     #plt.show()
-    plt.savefig('plots/confirmados{:02d}-{:02d}.png'.format(day, month))#, bbox_inches='tight')
+    plt.savefig('../public/confirmados{:02d}-{:02d}.png'.format(day, month))#, bbox_inches='tight')
     plt.close()
 
     fig, ax = plt.subplots(1, 1)
@@ -86,7 +86,7 @@ for month, day in product(range(7, 10), range(1, 32)):
     cax = divider.append_axes("right", size="5%", pad=0.1)
     ax.set_axis_off()
     mapa_DataFrame.plot(column='mortes', ax=ax, legend=True, cax=cax)
-    plt.savefig('plots/mortes{:02d}-{:02d}.png'.format(day, month))#, bbox_inches='tight', pad_inches=0)
+    plt.savefig('../public/mortes{:02d}-{:02d}.png'.format(day, month))#, bbox_inches='tight', pad_inches=0)
     plt.close()
 
     # [data casos_confirmados óbitos aguardando_result descartados recuperados] [casos_confirmados_acc óbitos_acc]
@@ -137,7 +137,7 @@ plt.plot_date(mapas_t2['Data'][1:], mapas_t2['Óbitos n_acc'][1:], xdate=True, l
 plt.xticks(rotation=15)
 plt.title('Dados diários')
 plt.legend()
-plt.savefig('plots/casos_confirmados.png')
+plt.savefig('../public/casos_confirmados.png')
 plt.close()
 
 # accumulate data
@@ -148,7 +148,7 @@ plt.title('Dados Acumulados')
 plt.legend()
 #plt.show()
 
-plt.savefig('plots/obitos.png')
+plt.savefig('../public/obitos.png')
 plt.close()
 
 # 40/55 15 faltantes
