@@ -1,6 +1,9 @@
 environment/*
-boletim_Paranaguá/*.pdf
-boletim_Paranaguá/*.jpg
-boletim_Paranaguá/*.jfif
-boletim_Paranaguá/*.csv
-boletim_Paranaguá/order.txt
+public/*.pdf
+public/*.jpg
+public/*.jfif
+public/*.csv
+public/*.png
+public/*.zip
+public/report.json
+public/order.txt
